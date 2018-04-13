@@ -1,0 +1,32 @@
+{
+  "name": "node-training",
+  "version": "0.1.0",
+  "description": "node training project",
+  "main": "app.js",
+  "scripts": {
+	"start": "nodemon src/app.js --presets es2015,stage-2",
+    "test": "test"
+  },
+  "keywords": [
+    "training",
+    "project",
+    "node"
+  ],
+  "author": "Nikolay Yonchev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyonchev/node-training.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nyonchev/node-training/issues"
+  },
+  "homepage": "https://github.com/nyonchev/node-training#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.17.3"
+  }
+}

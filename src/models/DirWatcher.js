@@ -1,8 +1,5 @@
 import { readdir } from 'fs';
-import EventEmitter from 'events';
-
-class MyEmitter extends EventEmitter {}
-const myEmitter = new MyEmitter();
+import myEmitter from './MyEmitter';
 
 export default class DirWarcher {
     constructor() {
@@ -18,11 +15,26 @@ export default class DirWarcher {
             if (err) {
                 this.dirContent = [];
                 this.emitChanged(dirContent);
-            } else if (this.isArrayChanged(this.dirContent, files)) {
-                this.dirContent = files;
-                this.emitChanged(this.dirContent);
+
+                return;
+            }
+
+            const csvOnly = this.getCsvFiles(files);
+
+            if (this.isArrayChanged(this.dirContent, csvOnly)) {
+                this.dirContent = csvOnly;
+                this.emitChanged(this.dirContent, path);
             }
         });
+    }
+
+    getCsvFiles = (files) =>
+        files.filter( item => this.getExtention(item) === 'csv' );
+
+    getExtention = (fileName) => {
+        const fileNameParticles = fileName.split('.');
+
+        return fileNameParticles[fileNameParticles.length - 1];
     }
 
     isArrayChanged = (oldArray, newArray) => {
@@ -40,7 +52,7 @@ export default class DirWarcher {
     isArrayItemsDiffer = (oldArray, newArray) =>
         oldArray.filter((item, index) => item != newArray[index]).length
 
-    emitChanged = (data) => {
-        myEmitter.emit('changed', data);
+    emitChanged = (data, path) => {
+        myEmitter.emit('dirwatcher:changed', data, path);
     }
 }

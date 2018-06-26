@@ -24,7 +24,10 @@ export default class Importer {
     importAsync = (data, path) => {
         console.log('import async', data, path);
 
-        data.map( file => csv({output:"line"})
+        data.map( file => csv({
+                output:"line",
+                noheader: true
+            })
             .fromFile(`${path}/${file}`)
             .subscribe((json)=>{
                 console.log('asyn promise', json)
@@ -47,7 +50,10 @@ export default class Importer {
     importSync = (data, path) => {
         console.log('import sync', data, path);
 
-        data.map( file => csv({output:"line"})
+        data.map( file => csv({
+                output:"line",
+                noheader: true
+            })
             .fromFile(`${path}/${file}`)
             .then( json => {
                 console.log(json);
